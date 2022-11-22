@@ -25,11 +25,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        if (_inputDirection.z == 0) 
+        if (_inputDirection.z == 0)
             return;
 
         Vector3 direction = new Vector3(0, 0, _inputDirection.z);
-        direction.x = 0;
         _rigidbody.AddRelativeForce(_speed * direction * Time.fixedDeltaTime, ForceMode.VelocityChange);
     }
 
@@ -41,4 +40,5 @@ public class PlayerMovement : MonoBehaviour
         Vector3 rotationDirection = new Vector3(0, _inputDirection.x, 0);
         _rigidbody.angularVelocity = rotationDirection * _angularSpeed * Time.fixedDeltaTime;
     }
+
 }

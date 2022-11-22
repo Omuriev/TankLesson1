@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 4f24ec918e53b1647acff31a7b371a0c
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _wheelCollider: {instanceID: 0}
+  - _dirtSplashEffect: {fileID: 191114, guid: 834c99069a124aa439d5795c3579843b, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

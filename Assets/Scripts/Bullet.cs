@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    [SerializeField] private GameObject _explosionEffect;
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private float _bulletSpeed;
 
@@ -28,5 +29,11 @@ public class Bullet : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Instantiate(_explosionEffect, transform.position, transform.rotation);
+        Destroy(gameObject);
     }
 }
