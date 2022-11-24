@@ -4,39 +4,72 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private float _maxHealthValue;
+    [SerializeField] private int _maxHealthValue = 3;
+    [SerializeField] private int _initializeHealthValue = 3;
+
     [SerializeField] private GameObject _dieExplosionEffect;
-    [SerializeField] private DeadZone _deadZone;
-    public float HealthValue { get; private set; }
 
-    private void OnEnable()
+    private int _currentHealth;
+    private bool _isInvulnerable = false;
+    private bool _isAlive = true;
+    private Coroutine _invulnerableCoroutine;
+
+    private void Awake()
     {
-        _deadZone.OnHealthChanged += TakeDamage;
+        Initialize();
     }
 
-    private void OnDisable()
+    private void Initialize()
     {
-        _deadZone.OnHealthChanged += TakeDamage;
+        SetHealth(_initializeHealthValue);
     }
 
-    private void Start()
+    private void SetHealth(int value)
     {
-        HealthValue = _maxHealthValue;
-    }
-
-    public void TakeDamage(float damageValue)
-    {
-        HealthValue -= damageValue;
-
-        if (HealthValue <= 0)
+        if (value > _maxHealthValue)
         {
-            Die();
+            value = _maxHealthValue;
         }
+
+        _currentHealth = value;
+    }
+
+    public void TakeDamage(int damageValue, float invulnerableTime)
+    {
+        if (_isInvulnerable || !_isAlive || _currentHealth <= 0)
+            return;
+
+        Debug.Log($"{gameObject.name} получил {damageValue} урона");
+        _currentHealth -= damageValue;
+        CheckDeathCondition();
+
+        if (invulnerableTime > 0)
+        {
+            if (_invulnerableCoroutine != null)
+                StopCoroutine(_invulnerableCoroutine);
+
+            _invulnerableCoroutine = StartCoroutine(StartInvulnerableTimer(invulnerableTime));
+        }
+            
+    }
+
+    private void CheckDeathCondition()
+    {
+        if (_currentHealth <= 0)
+            Die();
     }
 
     private void Die()
     {
         Instantiate(_dieExplosionEffect, transform.position, transform.rotation);
         Destroy(gameObject);
+        _isAlive = false;
+    }
+
+    private IEnumerator StartInvulnerableTimer(float invulnerableTime)
+    {
+        _isInvulnerable = true;
+        yield return new WaitForSeconds(invulnerableTime);
+        _isInvulnerable = false;
     }
 }
