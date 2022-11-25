@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 715841657}
-  - component: {fileID: 715841658}
+  - component: {fileID: 1623465147}
   m_Layer: 6
   m_Name: BulletSpawn
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 7889984818840343771}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &715841658
+--- !u!114 &1623465147
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,11 +40,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 715841656}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afe97defdc649104e93d481378d9f68d, type: 3}
+  m_Script: {fileID: 11500000, guid: 61cc5b1ba10009f42905e7ddaf5b49af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 6392412946061884621, guid: 10a1217579aa93442a65356ab751e77b, type: 3}
-  _shotEffect: {fileID: 101806, guid: 100825076f5964c47967e7d91b92352b, type: 3}
+  _weaponHandleAbility: {fileID: 869613878}
+  _prefab: {fileID: -1878296319824498808, guid: 10a1217579aa93442a65356ab751e77b, type: 3}
+  _shotPoint: {fileID: 715841657}
+  _reloadTime: 3
+  _currentBulletCount: 5
+  _maxCurrentBulletCount: 5
+  _allBulletCount: 12
+  _maxBulletCount: 20
 --- !u!1 &8451933865726000024
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,6 +97,7 @@ GameObject:
   - component: {fileID: 8451933866507290676}
   - component: {fileID: 8451933866507290681}
   - component: {fileID: 356576677}
+  - component: {fileID: 869613878}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -155,26 +162,14 @@ MonoBehaviour:
     m_ActionId: ae006e2e-7612-4321-8324-7fbd40b6ed18
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1807676311}
-        m_TargetAssemblyTypeName: TowerRotation, Assembly-CSharp
-        m_MethodName: InputRotation
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 6113a95e-98e1-4f34-a88e-dc70910165be
     m_ActionName: Player/Look[/Mouse/delta]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 715841658}
-        m_TargetAssemblyTypeName: Gun, Assembly-CSharp
-        m_MethodName: GetButtonValue
+      - m_Target: {fileID: 869613878}
+        m_TargetAssemblyTypeName: WeaponHandleAbility, Assembly-CSharp
+        m_MethodName: GetButtonClick
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -300,8 +295,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealthValue: 20
+  _initializeHealthValue: 3
   _dieExplosionEffect: {fileID: 191186, guid: 079954accd64b32419ec069129c81273, type: 3}
-  _deadZone: {fileID: 0}
+--- !u!114 &869613878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8451933866507290682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e537266dcf5404478bde9f37b9eb8ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentWeapon: {fileID: 1623465147}
 --- !u!1001 &8451933865723062951
 PrefabInstance:
   m_ObjectHideFlags: 0

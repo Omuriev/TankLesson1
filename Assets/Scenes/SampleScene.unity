@@ -1948,18 +1948,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 356576677, guid: 64a1b71e922f63c45bc406c768e6cdc9, type: 3}
-      propertyPath: _deadZone
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 715841658, guid: 64a1b71e922f63c45bc406c768e6cdc9, type: 3}
-      propertyPath: _prefab
-      value: 
-      objectReference: {fileID: -1878296319824498808, guid: 10a1217579aa93442a65356ab751e77b, type: 3}
-    - target: {fileID: 715841658, guid: 64a1b71e922f63c45bc406c768e6cdc9, type: 3}
-      propertyPath: _delayInSeconds
-      value: 0.01
-      objectReference: {fileID: 0}
     - target: {fileID: 1807676311, guid: 64a1b71e922f63c45bc406c768e6cdc9, type: 3}
       propertyPath: _camera
       value: 
