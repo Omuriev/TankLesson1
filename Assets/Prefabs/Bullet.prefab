@@ -321,7 +321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 8096279481691531773}
-  _bulletSpeed: 5
+  _bulletSpeed: 35
 --- !u!114 &5128800119164750922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,6 +337,8 @@ MonoBehaviour:
   _maxHealthValue: 1
   _initializeHealthValue: 1
   _dieExplosionEffect: {fileID: 191186, guid: 079954accd64b32419ec069129c81273, type: 3}
+  _takeDamageFeedbacks: {fileID: 0}
+  _dieFeedbacks: {fileID: 0}
 --- !u!1 &4332490403328821758
 GameObject:
   m_ObjectHideFlags: 0
