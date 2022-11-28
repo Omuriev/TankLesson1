@@ -1,3 +1,4 @@
+using MoreMountains.Feedbacks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,62 +6,58 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    [SerializeField] private WeaponHandleAbility _weaponHandleAbility;
     [SerializeField] private Projectile _prefab;
-    [SerializeField] private Transform _shotPoint;
-    [SerializeField] private float _reloadTime = 3f;
+    [SerializeField] private Transform _projectileSpawnPoint;
+    [SerializeField] private float _reloadTime = 0.5f;
 
     [Header("Clip Info")]
-    [SerializeField] private int _currentBulletCount = 5;
-    [SerializeField] private int _maxCurrentBulletCount = 5;
-    [SerializeField] private int _allBulletCount;
-    [SerializeField] private int _maxBulletCount = 20;
+    [SerializeField] private int _maxClip = 1;
+
+    [Header("Feedbacks")]
+    [SerializeField] private MMFeedbacks _shootFeedbacks;
     
-    private void OnEnable()
+    private int _currentBulletCount;
+    private bool _canShoot = true;
+
+    private void Awake()
     {
-        _weaponHandleAbility.OnShotStarted += OnTryShot;
+        Initialize();
     }
 
-    private void OnDisable()
+    private void Initialize()
     {
-        _weaponHandleAbility.OnShotStarted -= OnTryShot;
+        _currentBulletCount = _maxClip;
     }
 
-    private void OnTryShot()
+    public void OnTryShoot()
     {
-        if (_currentBulletCount > 0)
-        {
+        if (_canShoot)
             Shoot();
-        }
-        else
-        {
-            if (_allBulletCount > 0)
-            {
-                Reload();
-            }
-        }
     }
 
     private void Shoot()
     {
-        Projectile bullet = Instantiate(_prefab, _shotPoint.position, _shotPoint.rotation);
+        Projectile bullet = Instantiate(_prefab, _projectileSpawnPoint.position, _projectileSpawnPoint.rotation);
         bullet.Fire(transform.forward);
+        _shootFeedbacks?.PlayFeedbacks();
         _currentBulletCount--;
+
+        CheckReload();
     }
 
-    private void Reload()
+    private void CheckReload()
     {
-        int numberOfBulltes = _maxCurrentBulletCount - _currentBulletCount;
+        if (_currentBulletCount == 0)
+        {
+            StartCoroutine(Reload());
+            _canShoot = false;
+        }
+    }
 
-        if (_allBulletCount >= numberOfBulltes)
-        {
-            _allBulletCount = _allBulletCount - numberOfBulltes;
-            _currentBulletCount = _maxCurrentBulletCount;
-        }
-        else if (_allBulletCount < numberOfBulltes)
-        {
-            _currentBulletCount = _currentBulletCount + _allBulletCount;
-            _allBulletCount = 0;
-        }
+    private IEnumerator Reload()
+    {
+        yield return new WaitForSeconds(_reloadTime);
+        _canShoot = true;
+        _currentBulletCount = _maxClip;
     }
 }

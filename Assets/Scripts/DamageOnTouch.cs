@@ -1,3 +1,4 @@
+using MoreMountains.Feedbacks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,9 @@ public class DamageOnTouch : MonoBehaviour
     [SerializeField] private bool _canDamageOwner = false;
     [SerializeField] private int _selfDamageValue = 0;
     [SerializeField] private float _selfInvulnerableValue = 1;
+
+    [Header("Feedbacks")]
+    [SerializeField] private MMFeedbacks _makeDamageFeedbacks;
 
     private void Awake()
     {
@@ -43,6 +47,7 @@ public class DamageOnTouch : MonoBehaviour
             return;
 
         targetHealth.TakeDamage(_damageValue, _invulnerableValue);
+        _makeDamageFeedbacks?.PlayFeedbacks();
 
         if (_selfDamageValue > 0 && _ownerHealth)
             _ownerHealth.TakeDamage(_selfDamageValue, _selfInvulnerableValue);
